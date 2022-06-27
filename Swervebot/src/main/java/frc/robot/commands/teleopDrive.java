@@ -2,23 +2,22 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.ctre.phoenix.motorcontrol.ControlMode; 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.BaseMotorController; 
 
 public class TeleopDrive extends CommandBase {
   private final Drivetrain driveTrain;
   private final GenericHID controller; 
-  protected double forwardTorque, lateralTorque; 
-
-  protected final WPI_VictorSPX leftFront  = new WPI_VictorSPX(Constants.LEFT_FRONT); 
-  protected final WPI_VictorSPX rightFront = new WPI_VictorSPX(Constants.RIGHT_FRONT);   
-  protected final WPI_VictorSPX rightFollower = new WPI_VictorSPX(Constants.RIGHT_FOLLOWER); 
-  protected final WPI_VictorSPX leftFollower = new WPI_VictorSPX(Constants.LEFT_FOLLOWER); 
-  protected final DifferentialDrive drive = new DifferentialDrive(leftFront, rightFront);
+  protected final WPI_VictorSPX leftFront; 
+  protected final WPI_VictorSPX rightFront; 
+  protected final WPI_VictorSPX rightFollower; 
+  protected final WPI_VictorSPX leftFollower; 
+  protected final DifferentialDrive drive; 
+  protected double forwardTorque, lateralTorque;
 
   @Override
   public void initialize() {
@@ -43,8 +42,13 @@ public class TeleopDrive extends CommandBase {
     return false;
   }
 
-  public TeleopDrive(Drivetrain sub, GenericHID controller) {
+  public TeleopDrive(Drivetrain sub, GenericHID controller, WPI_VictorSPX one, WPI_VictorSPX two, WPI_VictorSPX three, WPI_VictorSPX four) {
       driveTrain = sub; 
       this.controller = controller; 
+      leftFront = one; 
+      rightFront = two; 
+      leftFollower = three; 
+      rightFollower = four; 
+      drive = new DifferentialDrive(leftFront, rightFront);
   }
 }
